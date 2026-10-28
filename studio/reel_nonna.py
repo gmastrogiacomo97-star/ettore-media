@@ -59,6 +59,7 @@ def s6(ctx, lt, t):
 def clamp01(x): return max(0.0, min(1.0, x))
 
 beats = [
+    G.Beat("Ho detto *no*\nalla nonna.", 2.2, None, lambda lt, t: E.emotion("spaventato", lt, t), sfx=[("thud", 0.0)], hook=True),
     G.Beat("Un’AI a pranzo\ndalla *nonna*.", 3.4, s1,
            lambda lt, t: E.emotion("felice", lt, t), sfx=[("pop", 0.2)], scale=1.06),
     G.Beat("«No, grazie.»", 3.2, s2,
@@ -76,7 +77,7 @@ beats = [
            lambda lt, t: E.action("sviene", lt, t) if lt < 1.6 else E.action("indica", lt - 1.6, t),
            sfx=[("bubble", 0.3), ("thud", 0.9)], scale=1.06),
 ]
-st404 = sum(b.dur for b in beats[:4])
+st404 = sum(b.dur for b in beats[:5])
 reel = G.Reel("FALLIMENTO #001", beats, "GIORNO 005 · VERSO 1.000.000", quiet=[(st404 + 0.7, st404 + 2.0)])
 if __name__ == "__main__":
     G.run(reel, "non2")

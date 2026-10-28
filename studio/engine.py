@@ -95,10 +95,30 @@ def headline(ctx, s, y, size, alpha, dy=0.0):
             ctx.move_to(x, y + dy + i * size * 1.12); ctx.show_text(c)
             x += ctx.text_extents(c).x_advance + sp
 
+def hook_headline(ctx, s, y, size):
+    """giant ink text on lime; *words* go in an ink box with lime text."""
+    font(ctx, SANS, size, True)
+    lines = s.split("\n")
+    widest = max(ctx.text_extents(l.replace("*", "")).x_advance for l in lines)
+    if widest > 880: size *= 880 / widest; font(ctx, SANS, size, True)
+    sp = ctx.text_extents(" ").x_advance
+    for i, line in enumerate(lines):
+        words = line.split(" "); clean = [w.replace("*", "") for w in words]
+        lw = sum(ctx.text_extents(w).x_advance for w in clean) + sp * (len(words) - 1)
+        x = CX - lw / 2; yy = y + i * size * 1.08
+        for w, c in zip(words, clean):
+            adv = ctx.text_extents(c).x_advance
+            if w.startswith("*"):
+                rrect(ctx, x - 14, yy - size * 0.82, adv + 28, size * 1.05, 16); ctx.set_source_rgb(*INK); ctx.fill()
+                ctx.set_source_rgb(*LIME)
+            else:
+                ctx.set_source_rgb(*INK)
+            ctx.move_to(x, yy); ctx.show_text(c); x += adv + sp
+
 # ---------- reel ----------
 class Beat:
-    def __init__(self, text, dur, scene=None, pose=None, sfx=(), scale=1.0, tag=None, speak=True):
-        self.text, self.dur, self.scene, self.pose = text, dur, scene, pose
+    def __init__(self, text, dur, scene=None, pose=None, sfx=(), scale=1.0, tag=None, speak=True, hook=False):
+        self.text, self.dur, self.scene, self.pose, self.hook = text, dur, scene, pose, hook
         self.sfx, self.scale, self.tag, self.speak = list(sfx), scale, tag, speak
 
 class Reel:
@@ -135,6 +155,17 @@ class Reel:
     def frame(self, t, surf):
         ctx = cairo.Context(surf)
         ctx.set_source_surface(background()); ctx.paint()
+        if t < self.body and self.beats[self.seg(t)].hook:
+            i = self.seg(t); b = self.beats[i]; lt = t - self.starts[i]
+            ctx.set_source_rgb(*LIME); ctx.paint()
+            z = 1.0 + 0.06 * (1 - eo(prog(lt, 0.0, 0.3)))
+            sh = 10 * (1 - prog(lt, 0.0, 0.35)) * math.sin(lt * 90)
+            ctx.save(); ctx.translate(CX + sh, 960); ctx.scale(z, z); ctx.translate(-CX, -960)
+            hook_headline(ctx, b.text, 470, 150)
+            p = self.pose(t); p["halo_col"] = PAPER
+            E.draw(ctx, t, CX, 1360, 300, p)
+            ctx.restore()
+            return
         if t < self.body:
             i = self.seg(t); b = self.beats[i]; A = self.starts[i]; lt = t - A
             tag = b.tag or self.tag
@@ -162,7 +193,8 @@ class Reel:
             text(ctx, "Annotato.", 0, 38, SANS, 118, LIME, True, "center", alpha=a)
             ctx.restore()
             text(ctx, self.counter, CX, 960, MONO, 38, PAPER, True, "center", alpha=eo(prog(lt, 0.35, 0.6)))
-        r = ETT_R * (0.6 + 0.4 * back(prog(t, 0.0, 0.3)))
+        h0 = self.starts[1] if self.beats[0].hook else 0.0
+        r = ETT_R * (0.6 + 0.4 * back(prog(t, h0, h0 + 0.3)))
         E.draw(ctx, t, CX, ETT_Y, r, self.pose(t))
 
     # ---------- audio ----------

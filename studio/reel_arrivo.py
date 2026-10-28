@@ -23,6 +23,7 @@ def end_scene(ctx, lt, t):
            alpha=G.eo(G.prog(lt, 0.8, 1.1)))
 
 beats = [
+    G.Beat("*«Arrivo»*\nè una bugia.", 2.2, None, lambda lt, t: E.emotion("errore", lt, t), sfx=[("glitch", 0.0)], hook=True),
     G.Beat("Tu che scrivi «arrivo»", 3.2, old(R.scene_phone, 0.0, 2.2),
            lambda lt, t: E.emotion("neutro", lt, t) | {"look": (-0.2, -0.9)} if lt < 1.2 else E.emotion("sorpreso", lt - 1.2, t),
            sfx=[("pop", 1.06), ("surprise", 1.3)]),

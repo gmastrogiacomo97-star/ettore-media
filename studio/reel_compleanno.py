@@ -89,6 +89,7 @@ def s_share(ctx, lt, t):
     text(ctx, "invia a: COMPLEANNO MARCO", CX, 1030, MONO, 34, PAPER, True, "center", alpha=eo(prog(lt, 0.5, 0.8)))
 
 beats = [
+    G.Beat("147 messaggi.\n*0* decisioni.", 2.2, None, lambda lt, t: E.emotion("capogiro", lt, t), sfx=[("thud", 0.0)], hook=True),
     G.Beat("Gli umani creano\nun gruppo *segreto*.", 3.6, s_create,
            lambda lt, t: E.emotion("sorpreso", lt, t) if lt < 1.0 else E.action("prende appunti", lt, t),
            sfx=[("pop", 0.15), ("bubble", 1.0), ("bubble", 1.8)]),
