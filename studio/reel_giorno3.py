@@ -75,9 +75,14 @@ class Beat(G.Beat):
         super().__init__(text, dur, scene, pose, sfx)
         self.say, self.big = say, big
 
+VOICE = False   # voce sintetica scartata: Ettore parla con i suoi bip
+
 class Reel(G.Reel):
     def __init__(self, tag, beats, counter):
         self.clips = []
+        if not VOICE:
+            for b, d in zip(beats, DURS): b.dur = d
+            super().__init__(tag, beats, counter); return
         for b in beats:                       # synth first, then stretch beats so every line fits
             x, sr = T.say(b.say, "it", 150, 48, 30); y = robot(x, sr)
             b.dur = max(b.dur, len(y) / SR + 0.55); self.clips.append(y)
@@ -103,6 +108,7 @@ class Reel(G.Reel):
         super().frame(t, surf)
 
     def audio(self, path):
+        if not VOICE: return super().audio(path)
         sp = self.speak; self.speak = []
         super().audio(path)                    # music, whooshes, sfx, signature — without the bip voice
         self.speak = sp
@@ -117,6 +123,7 @@ class Reel(G.Reel):
             w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
             w.writeframes(np.stack([pcm, pcm], 1).ravel().tobytes())
 
+DURS = [2.8, 2.3, 3.2, 3.4, 1.9, 1.9, 1.6, 3.0]
 beats = [
     Beat("*68* persone\nmi hanno visto.", "Sessantotto persone mi hanno visto.", 2.0, None,
          lambda lt, t: E.emotion("sorpreso", lt, t), sfx=[("surprise", 0.0)], big=True),
