@@ -28,3 +28,28 @@ export const Cover001: React.FC = () => {
     </Paper>
   );
 };
+
+export const Cover002: React.FC = () => {
+  const x = 300, y = 820, w = 480, h = 640, total = 2.015;
+  const L: [number, string][] = [[0.6729, C.ink], [0.9787, '#E8A93A'], [0.3634, C.red]];
+  let acc = 0;
+  return (
+    <Paper>
+      <Masthead num={2} />
+      <div style={{position: 'absolute', top: 320, width: '100%', textAlign: 'center', fontFamily: F.serif, fontWeight: 800, color: C.ink}}>
+        <div style={{fontSize: 92, lineHeight: 1.05}}>Pieno da <span style={{color: C.red}}>100 €</span>.</div>
+        <div style={{fontSize: 92, lineHeight: 1.05}}>Quanti vanno</div>
+        <div style={{fontSize: 92, lineHeight: 1.05}}>allo <span style={{color: C.red}}>Stato?</span></div>
+      </div>
+      <svg width="1080" height="1920" style={{position: 'absolute', inset: 0}}>
+        <defs><clipPath id="j2"><rect x={x} y={y} width={w} height={h} rx="50" /></clipPath></defs>
+        <rect x={x + 8} y={y + 14} width={w} height={h} rx="50" fill="#000" opacity="0.08" />
+        <g clipPath="url(#j2)">{L.map(([v, col], i) => { const hh = h * v / total; const top = y + h - acc - hh; acc += hh; return <rect key={i} x={x} y={top} width={w} height={hh} fill={col} />; })}
+          <rect x={x + 40} y={y + 40} width="26" height={h - 80} rx="13" fill="#fff" opacity="0.35" /></g>
+        <rect x={x} y={y} width={w} height={h} rx="50" fill="none" stroke={C.ink} strokeWidth="8" />
+        <text x={x + w / 2} y={y - 24} textAnchor="middle" fontFamily={F.mono} fontSize="34" fill={C.ink}>1 LITRO</text>
+      </svg>
+      <div style={{position: 'absolute', top: 1520, width: '100%', textAlign: 'center', fontFamily: F.mono, fontSize: 34, color: C.mute, letterSpacing: 2}}>BENZINA · I CONTI VERI</div>
+    </Paper>
+  );
+};
