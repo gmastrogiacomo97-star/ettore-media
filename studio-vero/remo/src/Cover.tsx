@@ -53,3 +53,29 @@ export const Cover002: React.FC = () => {
     </Paper>
   );
 };
+
+export const Cover003: React.FC = () => (
+  <Paper>
+    <Masthead num={3} />
+    <div style={{position: 'absolute', top: 320, width: '100%', textAlign: 'center', fontFamily: F.serif, fontWeight: 800, color: C.ink}}>
+      <div style={{fontSize: 88, lineHeight: 1.05}}>L’acqua in bottiglia</div>
+      <div style={{fontSize: 88, lineHeight: 1.05}}>costa</div>
+      <div style={{fontSize: 260, lineHeight: 1, color: C.red, letterSpacing: -6}}>×90</div>
+      <div style={{fontSize: 70, lineHeight: 1.05}}>quella del rubinetto.</div>
+    </div>
+    <svg width="1080" height="1920" style={{position: 'absolute', inset: 0}}>
+      <g transform="translate(250,880) scale(0.9)">
+        <path d="M80 0 h40 v40 c0 30 70 50 70 110 v420 c0 30 -20 40 -40 40 h-100 c-20 0 -40 -10 -40 -40 v-420 c0 -60 70 -80 70 -110 z" fill="#9FD0EC" stroke={C.ink} strokeWidth="7" />
+        <rect x="72" y="-22" width="56" height="30" rx="6" fill="#2F6FA0" stroke={C.ink} strokeWidth="6" />
+        <rect x="10" y="260" width="180" height="110" fill={C.red} />
+        <text x="100" y="328" textAnchor="middle" fontFamily={F.serif} fontWeight="800" fontSize="40" fill="#fff">0,24 €</text>
+      </g>
+      <g transform="translate(560,1120) scale(0.9)">
+        <path d="M80 160 L260 160 L245 380 L95 380 Z" fill="#9FD0EC" opacity="0.8" />
+        <path d="M70 80 L270 80 L250 385 L90 385 Z" fill="none" stroke={C.ink} strokeWidth="7" strokeLinejoin="round" />
+        <text x="170" y="290" textAnchor="middle" fontFamily={F.serif} fontWeight="800" fontSize="34" fill={C.ink}>0,003 €</text>
+      </g>
+    </svg>
+    <div style={{position: 'absolute', top: 1560, width: '100%', textAlign: 'center', fontFamily: F.mono, fontSize: 32, color: C.mute, letterSpacing: 2}}>AL LITRO · E CHI LA IMBOTTIGLIA?</div>
+  </Paper>
+);
