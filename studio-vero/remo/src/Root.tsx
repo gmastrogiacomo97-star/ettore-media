@@ -6,9 +6,12 @@ import {N001w, TOTAL as TOTW} from './N001w';
 import {Avatar} from './Avatar';
 import {N002} from './N002';
 import {N003} from './N003';
-import {Cover001, Cover002, Cover003} from './Cover';
+import {N004} from './N004';
+import {Cover001, Cover002, Cover003, Cover004} from './Cover';
 export const Root: React.FC = () => (
   <>
+  <Composition id="Cover004" component={Cover004} durationInFrames={1} fps={30} width={1080} height={1920} />
+  <Composition id="N004" component={N004.Comp} durationInFrames={N004.TOTAL} fps={30} width={1080} height={1920} />
   <Composition id="Cover003" component={Cover003} durationInFrames={1} fps={30} width={1080} height={1920} />
   <Composition id="N003" component={N003.Comp} durationInFrames={N003.TOTAL} fps={30} width={1080} height={1920} />
   <Composition id="Cover002" component={Cover002} durationInFrames={1} fps={30} width={1080} height={1920} />

@@ -79,3 +79,24 @@ export const Cover003: React.FC = () => (
     <div style={{position: 'absolute', top: 1560, width: '100%', textAlign: 'center', fontFamily: F.mono, fontSize: 32, color: C.mute, letterSpacing: 2}}>AL LITRO · E CHI LA IMBOTTIGLIA?</div>
   </Paper>
 );
+
+export const Cover004: React.FC = () => (
+  <Paper>
+    <Masthead num={4} />
+    <div style={{position: 'absolute', top: 320, width: '100%', textAlign: 'center', fontFamily: F.serif, fontWeight: 800, color: C.ink}}>
+      <div style={{fontSize: 90, lineHeight: 1.05}}>Un ascolto su Spotify.</div>
+      <div style={{fontSize: 90, lineHeight: 1.05}}>All’artista arriva</div>
+      <div style={{fontSize: 200, lineHeight: 1.05, color: C.red, letterSpacing: -4}}>&lt; 0,5 cent</div>
+    </div>
+    <svg width="1080" height="1920" style={{position: 'absolute', inset: 0}}>
+      <g transform="translate(540,1180)">
+        <circle r="210" fill="#C46F3A" stroke="#7A3D1A" strokeWidth="10" />
+        <circle r="165" fill="none" stroke="#E39A62" strokeWidth="8" />
+        <text y="60" textAnchor="middle" fontFamily={F.serif} fontWeight="800" fontSize="200" fill="#FBE3CF">1</text>
+        <path d="M0 -230 V230" stroke={C.paper} strokeWidth="26" />
+        <path d="M0 -230 V230" stroke={C.ink} strokeWidth="6" strokeDasharray="20 16" />
+      </g>
+    </svg>
+    <div style={{position: 'absolute', top: 1500, width: '100%', textAlign: 'center', fontFamily: F.mono, fontSize: 32, color: C.mute, letterSpacing: 2}}>DOVE VANNO I SOLDI DELLO STREAMING</div>
+  </Paper>
+);
